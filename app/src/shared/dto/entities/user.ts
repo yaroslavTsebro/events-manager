@@ -5,26 +5,32 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { AuthProvider } from './auth-provider';
 import { ApiProperty } from '@nestjs/swagger';
+import { Participant } from './participant';
 
 @Entity()
 export class User implements IUser {
-  @ApiProperty({ description: 'User ID', example: 1 })
+  @ApiProperty({ description: 'User ID'})
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ description: 'User email', example: 'user@example.com' })
+  @ApiProperty({ description: 'User email' })
   @Column({ unique: true })
   email: string;
 
-  @ApiProperty({ description: 'User name', example: 'John Doe', nullable: true })
+  @ApiProperty({ description: 'User name', nullable: true })
   @Column({ nullable: true })
   name?: string;
 
   @OneToOne(() => AuthProvider, (authProvider) => authProvider.user, { cascade: true })
   @JoinColumn()
   authProvider: AuthProvider;
+
+  @OneToMany(() => Participant, (participant) => participant.user)
+  @JoinColumn()
+  participants: Participant[];
 }
 

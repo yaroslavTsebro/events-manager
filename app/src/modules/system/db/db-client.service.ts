@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { IEnvVariables } from 'src/shared/contracts/modules/config';
 import { AuthProvider } from 'src/shared/dto/entities/auth-provider';
+import { Participant } from 'src/shared/dto/entities/participant';
+import { Event } from 'src/shared/dto/entities/event';
 import { User } from 'src/shared/dto/entities/user';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
@@ -20,6 +22,8 @@ export class DbClient extends DataSource {
       entities: [
         User,
         AuthProvider,
+        Event,
+        Participant,
       ],
       synchronize: true,
     } satisfies DataSourceOptions;
