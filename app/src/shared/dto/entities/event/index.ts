@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IEvent } from 'src/shared/contracts/entities/event';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Geometry, Index, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Index, JoinColumn } from 'typeorm';
 import { Participant } from '../participant';
 import { Point } from '../point';
 
@@ -15,8 +15,8 @@ export class Event implements IEvent {
   name: string;
 
   @ApiProperty()
-  @Column('text')
-  description: string;
+  @Column('text', { nullable: true })
+  description?: string;
 
   @ApiProperty()
   @Column({ type: 'bigint' })

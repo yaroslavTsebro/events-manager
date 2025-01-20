@@ -1,12 +1,16 @@
-import { Delete, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Participant } from 'src/shared/dto/entities/participant';
 import { ParticipantService } from './participant.service';
 import { IUser } from 'src/shared/contracts/entities/user';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { EventGuard } from '../auth/guards/event.guard';
+import { AuthorizationGuard } from '../auth/guards/authorization.guard';
+
 
 @ApiTags()
+@Controller()
+@UseGuards(AuthorizationGuard)
 export class ParticipantController {
   constructor(private readonly participantService: ParticipantService) { }
 

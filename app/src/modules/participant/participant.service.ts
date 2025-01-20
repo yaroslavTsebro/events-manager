@@ -16,25 +16,24 @@ export class ParticipantService {
 
   async participate(eventId: number, user: IUser): Promise<Participant> {
     const event = await this.eventRepository.findOne(eventId);
-
+    
     if (!event) { throw new NotFoundException(`Event with ID ${eventId} not found`); }
-
+    
     const existingParticipant = await this.participantRepository.findByUserAndEvent(user.id, eventId);
-
+    
     if (existingParticipant) { throw new BadRequestException('User is already participating in this event'); }
-
+    
     if (event.currentParticipants >= event.maxParticipants) { throw new BadRequestException('Event has reached maximum number of participants'); }
-
+    
     const participant = await this.participantRepository.create({ event: { id: eventId } as Event, user: { id: user.id } as User, role: ParticipantRole.VISITOR } as Participant);
-
+    
     event.currentParticipants += 1;
     await this.eventRepository.update(eventId, event);
-
+    
     return participant;
   }
 
   async cancelParticipation(eventId: number, user: IUser): Promise<Participant> {
-
     const participant = await this.participantRepository.findByUserAndEvent(eventId, user.id);
     if (!participant) { throw new ForbiddenException('You are not allowed to do this action') }
 

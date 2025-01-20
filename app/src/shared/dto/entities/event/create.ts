@@ -6,9 +6,8 @@ import { Point } from '../point';
 
 export class CreateEventDto {
   @ApiProperty()
-  @IsOptional()
   @IsString()
-  name?: string;
+  name: string;
 
   @ApiProperty()
   @IsOptional()
@@ -16,19 +15,16 @@ export class CreateEventDto {
   description?: string;
 
   @ApiProperty()
-  @IsOptional()
   @IsNotPastDate()
-  date?: number;
+  date: number;
 
   @ApiProperty()
-  @IsOptional()
   @ValidateNested()
   @Type(() => Point)
-  point?: Point;
+  point: Point;
 
   @ApiProperty()
-  @IsOptional()
   @IsInt()
   @Min(1)
-  maxParticipants?: number;
+  maxParticipants: number;
 }
