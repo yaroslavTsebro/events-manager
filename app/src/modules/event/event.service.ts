@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PaginationQueryDto } from 'src/shared/dto/pagination';
 import { EventPaginationResult } from 'src/shared/dto/pagination/event';
 import { EventRepository } from '../system/db/repositories/event.repository';
-import { IUser } from 'src/shared/contracts/entities/user';
 import { Event } from '../../shared/dto/entities/event'
 import { CreateEventDto } from 'src/shared/dto/entities/event/create';
 import { UpdateEventDto } from 'src/shared/dto/entities/event/update';

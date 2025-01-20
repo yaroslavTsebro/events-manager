@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EventDao } from '../dao/event.dao';
 import { CreateEventDto } from 'src/shared/dto/entities/event/create';
 import { UpdateEventDto } from 'src/shared/dto/entities/event/update';
 import { Event } from '../../../../shared/dto/entities/event'
 import { Point } from 'src/shared/dto/entities/point';
 import { FindManyOptions } from 'typeorm';
+import { EventNotFoundException, InvalidUpdateException } from 'src/shared/exceptions/event';
 
 @Injectable()
 export class EventRepository {
@@ -26,7 +27,6 @@ export class EventRepository {
     return this.dao.save(event);
   }
 
-
   async findAll(
     page: number,
     limit: number,
@@ -47,7 +47,7 @@ export class EventRepository {
     const event = await this.dao.findOneBy({ id });
 
     if (!event) {
-      throw new NotFoundException(`Event with ID ${id} not found`);
+      throw new EventNotFoundException(id);
     }
 
     return event;
@@ -57,28 +57,26 @@ export class EventRepository {
     const event = await this.dao.findOneBy({ id });
 
     if (!event) {
-      throw new NotFoundException(`Event with ID ${id} not found`);
+      throw new EventNotFoundException(id);
     }
 
-
     if (updateEventDto.maxParticipants !== undefined) {
-
-      const currentParticipantsCount = event.currentParticipants
+      const currentParticipantsCount = event.currentParticipants;
 
       if (updateEventDto.maxParticipants < currentParticipantsCount) {
-        throw new BadRequestException(
-          `maxParticipants (${updateEventDto.maxParticipants}) cannot be less than currentParticipants (${currentParticipantsCount})`,
+        throw new InvalidUpdateException(
+          updateEventDto.maxParticipants,
+          currentParticipantsCount,
         );
       }
     }
-
 
     if (updateEventDto.point) {
       const { type, coordinates } = updateEventDto.point;
       updateEventDto.point = {
         type,
         coordinates,
-      } as Point
+      } as Point;
     }
 
     Object.assign(event, updateEventDto);
@@ -86,12 +84,11 @@ export class EventRepository {
     return this.dao.save(event);
   }
 
-
   async remove(id: number): Promise<void> {
     const event = await this.dao.findOneBy({ id });
 
     if (!event) {
-      throw new NotFoundException(`Event with ID ${id} not found`);
+      throw new EventNotFoundException(id);
     }
 
     await this.dao.remove(event);
