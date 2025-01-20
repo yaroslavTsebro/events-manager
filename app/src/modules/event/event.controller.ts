@@ -17,7 +17,7 @@ import { ParticipantRole } from 'src/shared/contracts/entities/participant';
 @UseGuards(AuthorizationGuard)
 @ApiBearerAuth()
 @Controller('events')
-export class EventsController {
+export class EventController {
   constructor(private readonly eventService: EventService) { }
 
   @Get()

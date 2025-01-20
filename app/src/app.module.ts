@@ -7,6 +7,7 @@ import { DbModule } from './modules/system/db/db.module';
 import { HashModule } from './modules/system/hash/hash.module';
 import { RepositoriesModule } from './modules/system/db/repositories/repositories.module';
 import { EventModule } from './modules/event/event.module';
+import { ParticipantModule } from './modules/participant/participant.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EventModule } from './modules/event/event.module';
     UserModule,
     HashModule,
     EventModule,
+    ParticipantModule,
   ]
 })
 export class AppModule { }

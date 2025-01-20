@@ -15,4 +15,8 @@ export class ParticipantRepository {
 
     return this.dao.save(participant);
   }
+
+  async remove(participationId: number): Promise<Participant> {
+    return this.dao.remove({id: participationId} as Participant);
+  }
 }
