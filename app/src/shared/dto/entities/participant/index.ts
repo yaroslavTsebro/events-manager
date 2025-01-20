@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IParticipant, ParticipantRole } from 'src/shared/contracts/entities/participant';
 import { Entity, Unique, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
-import { User } from './user';
-import { Event } from './event';
+import { User } from '../user';
+import { Event } from '../event';
 
 @Entity()
 @Unique(['event', 'user'])

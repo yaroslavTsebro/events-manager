@@ -7,9 +7,9 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { AuthProvider } from './auth-provider';
+import { AuthProvider } from '../auth-provider';
 import { ApiProperty } from '@nestjs/swagger';
-import { Participant } from './participant';
+import { Participant } from '../participant';
 
 @Entity()
 export class User implements IUser {

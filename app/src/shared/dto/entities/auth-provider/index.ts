@@ -1,6 +1,6 @@
 import { IAuthProvider, AuthProviderType } from 'src/shared/contracts/entities/auth-provider';
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
-import { User } from './user';
+import { User } from '../user';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
